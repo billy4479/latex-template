@@ -1,0 +1,24 @@
+name: Build Latex
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Updating cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Run `nix build`
+        run: nix build
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            result/*.pdf
+            LICENSE
+            README.md
