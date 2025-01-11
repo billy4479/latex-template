@@ -99,7 +99,8 @@
 
             inkscape # `svg` dependencies
           ])
-          ++ fonts;
+          ++ fonts
+          ++ [ latex-build.packages.${system}.default ];
 
         OSFONTDIR = "${fontDir}/share/fonts";
         FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = fonts; };
@@ -109,9 +110,6 @@
       {
         devShells.default = pkgs.mkShell {
           inherit nativeBuildInputs OSFONTDIR FONTCONFIG_FILE;
-          packages = [
-            latex-build.packages.${system}.default
-          ];
         };
         packages = rec {
           document = pkgs.stdenvNoCC.mkDerivation {
